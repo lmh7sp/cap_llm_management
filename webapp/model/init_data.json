@@ -1,0 +1,15 @@
+{
+    "isDeleteable":false,
+    "isDownloadable":false,
+    "isTextAreaEnabled":true,
+    "userData":{
+        "firstname": "Dummy",
+        "lastname": "User",
+        "email": "dummy.user@com",
+        "name": "dummy.user@com",
+        "displayName": "Dummy User (dummy.user@com)"
+    },
+    "chatHistory":[],
+    "conversationId": "",
+    "isNewConversation": true
+}

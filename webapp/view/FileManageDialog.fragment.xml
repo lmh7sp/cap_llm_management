@@ -1,0 +1,133 @@
+<core:FragmentDefinition 
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:unified="sap.ui.unified"
+    xmlns:core="sap.ui.core">
+    <Dialog
+        id="Dialog"
+        title="Manage Files"
+        resizable="true"
+        draggable="true"
+        beforeOpen=".onDialogBeforeOpen">
+        <Table
+            id="dialog-Table"
+            sticky="ColumnHeaders,HeaderToolbar"
+            busyIndicatorDelay="0"
+            mode="SingleSelectLeft"
+            growing="true"
+            growingThreshold="5"
+            growingScrollToLoad="true"
+            width="auto"
+            fixedLayout="false"
+            items="{ 
+                path:'files>/Files',
+                parameters: {
+                    $orderby: 'createdAt desc'
+			    },
+			    templateShareable: false
+            }"
+            selectionChange="onDialogTableSelectionChange">
+            <headerToolbar>
+                <OverflowToolbar id="dialog-overflowToolbar">
+                    <Title
+                        id="dialog-Title"
+                        text="Files"
+                        level="H2"/>
+                    <SearchField
+                        id="dialog-SearchField"
+                        width="20%"
+                        liveChange=".onFileNameSearch">
+                        <layoutData>
+                            <OverflowToolbarLayoutData
+                                id="dialog-SearchField-overflowToolbarLayoutData"
+                                priority="NeverOverflow"
+                            />
+                        </layoutData>
+                    </SearchField>
+                    <ToolbarSpacer id="dialog-ToolbarSpacer"/>
+                    <unified:FileUploader
+                        id="dialog-UploadButton"
+                        buttonOnly="true"
+                        buttonText="Upload"
+                        httpRequestMethod="Put"
+                        sendXHR="true"
+                        fileType="pdf"
+                        mimeType="application/pdf"
+                        sameFilenameAllowed="true"
+                        change=".onFileUploaderChange"
+                        typeMissmatch=".onTypeMissmatch"/>
+                    <Button
+                        id="dialog-DownloadButton"
+                        text="Download"
+                        enabled="{local>/isDownloadable}"
+                        press=".onDownloadButtonPress"/>
+                    <Button
+                        id="dialog-DeleteButton"
+                        text="Deleted"
+                        enabled="{local>/isDeleteable}"
+                        press=".onDeleteButtonPress"/>
+                    <Button
+                        id="dialog-DeleteEmbeddingButton"
+                        text="Delete Embeddings"
+                        press=".onDeleteEmbeddingButtonPress"/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column id="dialog-column-fileName">
+                    <header>
+                        <Label id="dialog-label-fileName" text="File Name"/>
+                    </header>
+                </Column>
+                <Column id="dialog-column-id">
+                    <header>
+                        <Label id="dialog-label-id" text="ID"/>
+                    </header>
+                </Column>
+                <Column id="dialog-column-fileSize">
+                    <header>
+                        <Label id="dialog-label-fileSize" text="File Size"/>
+                    </header>
+                </Column>
+                <Column id="dialog-column-actionButton" importance="High">
+                    <header>
+                        <Label id="dialog-label-actionButton" text="Generate Embeddings"/>
+                    </header>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem id="dialog-columnListItem">
+                    <cells>
+                        <HBox id="dialog-HBox">
+                            <core:Icon
+                                id="dialog-Icon"
+                                src="{parts: ['files>mediaType', 'files>fileName'], formatter: '.getIconSrc' }"
+                                color="white"
+                                visible="true"
+                                class="sapMUSTItemImage sapMUSTItemIcon"
+                            />
+                            <VBox id="dialog-VBox" class="sapUiTinyMargin sapUiSmallMarginBegin">
+                                <Text id="dialog-cell-FileName"  text="{files>fileName}" class="sapUiTinyMarginTop" />
+                            </VBox>
+                        </HBox>
+                        <Text id="dialog-cell-ID" text="{files>ID}" />
+                        <Text id="dialog-cell-FileSize"
+                            text="{path: 'files>size', formatter: '.getFileSizeWithUnits'}"
+                        />
+                        <Button
+                            id="dialog-EmbeddingButton"
+                            type="Transparent"
+                            icon="sap-icon://begin"
+                            press=".onEmbeddingButtonPress"
+                        />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <beginButton>
+            <Button
+                id="dialog-CloseButton"
+                text="Close"
+                press=".onCloseButtonPress"/>
+        </beginButton>
+    </Dialog>
+</core:FragmentDefinition>

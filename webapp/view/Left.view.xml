@@ -1,0 +1,56 @@
+<mvc:View 
+    controllerName="capllmmanagement.controller.Left"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true">
+    <Page
+        id="left-Page"
+        showHeader="false">
+        <content>
+            <OverflowToolbar id="left-content-OverflowToolbar" height="3rem">
+                <Title id="left-Title" text="Chats"/>
+                <ToolbarSpacer id="left-content-ToolbarSpacer"/>
+                <Button
+                    id="NewChatButton"
+                    icon="sap-icon://add"
+                    text="New Chat"
+                    press=".onNewChatPress"/>
+            </OverflowToolbar>
+            <ScrollContainer id="left-ScrollContainer">
+                <List
+                    id="left-List"
+                    growing="true"
+                    growingThreshold="15"
+                    growingScrollToLoad="true"
+                    noDataText="No chat history available"
+                    enableBusyIndicator="true"
+                    items="{
+                        path:'/Conversation',
+                        sorter:{
+                            path:'last_update_time',
+                            descending: true
+                        }
+                    }"
+                    itemPress=".onConversationPress"
+                    delete=".onConversationDelete"
+                    mode="Delete">
+                    <StandardListItem
+                        id="_standardListItem"
+                        type="Navigation"
+                        title="{title}"
+                        description="{userID} | {creation_time}"/>
+                </List>
+            </ScrollContainer>
+        </content>
+        <footer>
+            <OverflowToolbar id="left-footer-OverflowToolbar">
+                <ToolbarSpacer id="left-footer-ToolbarSpacer"/>
+                <Button
+                    id="FileManageButton"
+                    icon="sap-icon://collections-management"
+                    text="Manage Files"
+                    press="onManageFilesPress"/>
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

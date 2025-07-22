@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="ChatService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Conversation" EntityType="ChatService.Conversation">
+                    <NavigationPropertyBinding Path="to_messages" Target="Message"/>
+                </EntitySet>
+                <EntitySet Name="Message" EntityType="ChatService.Message">
+                    <NavigationPropertyBinding Path="cID" Target="Conversation"/>
+                </EntitySet>
+                <ActionImport Name="getChatRagResponse" Action="ChatService.getChatRagResponse"/>
+                <FunctionImport Name="deleteChatData" Function="ChatService.deleteChatData"/>
+            </EntityContainer>
+            <EntityType Name="Conversation">
+                <Key>
+                    <PropertyRef Name="cID"/>
+                </Key>
+                <Property Name="cID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="userID" Type="Edm.String"/>
+                <Property Name="creation_time" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="last_update_time" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="title" Type="Edm.String"/>
+                <NavigationProperty Name="to_messages" Type="Collection(ChatService.Message)" Partner="cID">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Message">
+                <Key>
+                    <PropertyRef Name="cID_cID"/>
+                    <PropertyRef Name="mID"/>
+                </Key>
+                <NavigationProperty Name="cID" Type="ChatService.Conversation" Partner="to_messages">
+                    <ReferentialConstraint Property="cID_cID" ReferencedProperty="cID"/>
+                </NavigationProperty>
+                <Property Name="cID_cID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="mID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="role" Type="Edm.String"/>
+                <Property Name="content" Type="Edm.String"/>
+                <Property Name="creation_time" Type="Edm.DateTimeOffset" Precision="7"/>
+            </EntityType>
+            <ComplexType Name="RagResponse_AdditionalContents">
+                <Property Name="score" Type="Edm.String"/>
+                <Property Name="pageContent" Type="Edm.String"/>
+            </ComplexType>
+            <ComplexType Name="RagResponse">
+                <Property Name="role" Type="Edm.String"/>
+                <Property Name="content" Type="Edm.String"/>
+                <Property Name="messageTime" Type="Edm.String"/>
+                <Property Name="additionalContents" Type="Collection(ChatService.RagResponse_AdditionalContents)" Nullable="false"/>
+            </ComplexType>
+            <Action Name="getChatRagResponse" IsBound="false">
+                <Parameter Name="conversationId" Type="Edm.String"/>
+                <Parameter Name="messageId" Type="Edm.String"/>
+                <Parameter Name="message_time" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Parameter Name="user_id" Type="Edm.String"/>
+                <Parameter Name="user_query" Type="Edm.String"/>
+                <ReturnType Type="ChatService.RagResponse"/>
+            </Action>
+            <Function Name="deleteChatData" IsBound="false" IsComposable="false">
+                <ReturnType Type="Edm.String"/>
+            </Function>
+            <Annotations Target="ChatService.Conversation/cID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+            <Annotations Target="ChatService.Message/mID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

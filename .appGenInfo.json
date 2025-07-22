@@ -1,0 +1,29 @@
+{
+  "generationParameters": {
+    "generationDate": "Mon Jul 21 2025 00:29:44 GMT+0000 (Coordinated Universal Time)",
+    "generatorPlatform": "SAP Business Application Studio",
+    "serviceType": "SAP System (ABAP On Premise)",
+    "metadataFilename": "",
+    "serviceUrl": "https://btp-kr-pockr-dev-hr-approval-rag-usecase-srv.cfapps.ap12.hana.ondemand.com/odata/v4/chat",
+    "appName": "cap_llm_management",
+    "appTitle": "CAP LLM Management",
+    "appDescription": "CAP LLM Management",
+    "appNamespace": "",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.138.0",
+    "enableCodeAssist": false,
+    "enableEslint": false,
+    "enableTypeScript": false,
+    "showMockDataInfo": true,
+    "generatorVersion": "1.18.2",
+    "template": "Custom Page V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [
+      {
+        "type": "Main Entity",
+        "value": "Conversation"
+      }
+    ],
+    "launchText": "In order to launch the generated app, simply run the following from the generated app root folder:\n\n```\n    npm start\n```"
+  }
+}

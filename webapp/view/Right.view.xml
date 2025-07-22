@@ -1,0 +1,46 @@
+<mvc:View 
+    controllerName="capllmmanagement.controller.Right"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true">
+    <Page
+        id="right-Page"
+        showHeader="false"
+        floatingFooter="true">
+        <List
+            id="right-List"
+            showNoData="false"
+            showSeparators="Inner"
+            items="{
+                path:'local>/chatHistory',
+                sorter:{
+                    path:'creation_time',
+                    descending: false
+                }
+            }"
+            busyIndicatorDelay="0">
+            <FeedListItem
+                id="_feedListItem"
+                info="{local>role}"
+                text="{local>content}"
+                timestamp="{local>creation_time}"
+                icon="{path: 'local>role', formatter: '.getIconByRole'}"
+                iconInitials="{path: 'local>role', formatter: '.getIconInitialsByRole'}"
+                showIcon="true"/>
+        </List>
+        <footer>
+            <OverflowToolbar
+                id="right-OverflowToolbar"
+                height="auto">
+                <FeedInput
+                    id="right-FeedInput"
+                    showIcon="false"
+                    placeholder="Enter your message...."
+                    growing="true"
+                    post=".onFeedInputPost"
+                    enabled="{local>/isTextAreaEnabled}"
+                    />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>
