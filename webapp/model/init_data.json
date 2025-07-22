@@ -3,11 +3,8 @@
     "isDownloadable":false,
     "isTextAreaEnabled":true,
     "userData":{
-        "firstname": "Dummy",
-        "lastname": "User",
         "email": "dummy.user@com",
-        "name": "dummy.user@com",
-        "displayName": "Dummy User (dummy.user@com)"
+        "initials": "DU"
     },
     "chatHistory":[],
     "conversationId": "",

@@ -28,26 +28,21 @@ sap.ui.define([
             .catch(e=>console.log(e));
         },
         getUserInfo:function(){
-            const appId = this.getOwnerComponent().getManifestEntry("/sap.app/id");
-            const appPath = appId.replaceAll(".", "/");
-            const appModulePath = jQuery.sap.getModulePath(appPath);
-            const url = appModulePath + "/user-api/currentUser";
-            const oModel = new JSONModel();
-            oModel.loadData(url);
-            oModel.dataLoaded()
-            .then(()=>{
-                const oData = oModel.getData();
-                if (oData.email) {
-                    this.oOwnerComponent.getModel("local").setProperty("/userData",oData);
-                }
-            });
+            if(sap?.ushell?.Container?.getUser){
+                const oUser = sap.ushell.Container.getUser();
+                this.oOwnerComponent.getModel("local").setProperty("/userData",{
+                    "initials": oUser.getInitials(),
+                    "email": oUser.getEmail()
+                });
+            }
+            
         },
         getIconByRole:function(sRole){
             return sRole === "assistant" ? "sap-icon://da-2" : ""
         },
         getIconInitialsByRole:function(sRole){
             const oUserData = this.getView().getModel("local").getProperty("/userData");
-            return sRole === "assistant" ? "" : oUserData.firstname.charAt(0) + oUserData.lastname.charAt(0)
+            return sRole === "assistant" ? "" : oUserData.initials
         },
         onFeedInputPost:function(e){
             
