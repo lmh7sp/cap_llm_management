@@ -9,7 +9,7 @@
         floatingFooter="true">
         <List
             id="right-List"
-            showNoData="false"
+            noDataText="How can I help you today ?"
             showSeparators="Inner"
             items="{
                 path:'local>/chatHistory',
@@ -17,8 +17,7 @@
                     path:'creation_time',
                     descending: false
                 }
-            }"
-            busyIndicatorDelay="0">
+            }">
             <FeedListItem
                 id="_feedListItem"
                 info="{local>role}"

@@ -67,6 +67,7 @@ sap.ui.define([
                 content: userMessage
             });
             oLocalModel.setProperty("/chatHistory",aHistory);
+            this.byId("right-List").setBusy(true);
             oActionContext.invoke()
             .then(()=>{
                 if(oLocalModel.getProperty("/isNewConversation")){
@@ -80,6 +81,7 @@ sap.ui.define([
             .catch(e=>console.log(e))
             .finally(()=>{
                 oModel.bindList("/Conversation").refresh();
+                this.byId("right-List").setBusy(false);
                 oLocalModel.setProperty("/isTextAreaEnabled",true);
             })
         }
